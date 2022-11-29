@@ -1,0 +1,22 @@
+Idea: 
+- remove the keypress plugin in .sdf
+- receive the message from Key Publisher in Gazebo
+- transfer to ROS (bridge)
+- subscribe in a node and prepare a new message
+- publish new message to cmd_vel
+- transfer to Gazebo (bridge)
+
+ign gazebo building_robot.sdf
+
+ros2 run ros_ign_bridge parameter_bridge /cmd_vel@geometry_msgs/msg/Twist@ignition.msgs.Twist
+
+ign topic -e -t cmd_vel
+ros2 topic echo cmd_vel
+
+ros2 run ros_ign_bridge parameter_bridge /keyboard/keypress@std_msgs/msg/Int32@ignition.msgs.Int32
+
+ros2 topic echo keyboard/keypress
+ign topic -e -t keyboard/keypress
+
+ros2 run py_server server
+
